@@ -20,40 +20,39 @@ function getHumanChoice(){
     return choices;
 }
 
-function playRound(humanChoice) {
+function playRound() {
     const computerSelection = getComputerChoice();
-    let display = document.querySelector("div")
-    const humanSelection = humanChoice;
+    const humanSelection = getHumanChoice();
     if (computerSelection === humanSelection) {
-        display.textContent = `It's a tie! You both chose ${humanSelection}`;
+        console.log(`It's a tie! You both chose ${humanSelection}`);
         return (2);
     } else if (
         (computerSelection === "rock" && humanSelection === "scissors") ||
         (computerSelection === "paper" && humanSelection === "rock") ||
         (computerSelection === "scissors" && humanSelection === "paper")
     ) { 
-        display.textContent = `You lose! ${computerSelection} beats ${humanSelection}`;
+        console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
         return(1);
     } else {
-        display.textContent = `You win! ${humanSelection} beats ${computerSelection}`;
+        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
         return(0);
     }
 
 }
 
-let selection = document.querySelectorAll("button")
-selection.forEach(button => {
-    button.addEventListener("click",(select) => {
-        switch(select.target.id){
-            case "scissors":
-                playRound("scissors")
-                break
-            case "paper":
-                playRound("paper")
-                break
-            case "rock":
-                playRound("rock")
-                break
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    for (let i = 0; i < 5; i++) {
+        const result = playRound();
+        if (result === 0) {
+            humanScore++;
+        } else if (result === 1) {
+            computerScore++;
         }
-    })
-})
+    }
+    console.log(`Final Score: You ${humanScore} - Computer ${computerScore}`);
+}
+let humanScore = 0;
+let computerScore = 0;
+playGame();
