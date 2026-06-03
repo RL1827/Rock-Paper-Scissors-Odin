@@ -20,39 +20,40 @@ function getHumanChoice(){
     return choices;
 }
 
-function playRound() {
+function playRound(humanChoice) {
     const computerSelection = getComputerChoice();
-    const humanSelection = getHumanChoice();
+    let display = document.querySelector("div")
+    const humanSelection = humanChoice;
     if (computerSelection === humanSelection) {
-        console.log(`It's a tie! You both chose ${humanSelection}`);
+        display.textContent = `It's a tie! You both chose ${humanSelection}`;
         return (2);
     } else if (
         (computerSelection === "rock" && humanSelection === "scissors") ||
         (computerSelection === "paper" && humanSelection === "rock") ||
         (computerSelection === "scissors" && humanSelection === "paper")
     ) { 
-        console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
+        display.textContent = `You lose! ${computerSelection} beats ${humanSelection}`;
         return(1);
     } else {
-        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
+        display.textContent = `You win! ${humanSelection} beats ${computerSelection}`;
         return(0);
     }
 
 }
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        const result = playRound();
-        if (result === 0) {
-            humanScore++;
-        } else if (result === 1) {
-            computerScore++;
+let selection = document.querySelectorAll("button")
+selection.forEach(button => {
+    button.addEventListener("click",(select) => {
+        switch(select.target.id){
+            case "scissors":
+                playRound("scissors")
+                break
+            case "paper":
+                playRound("paper")
+                break
+            case "rock":
+                playRound("rock")
+                break
         }
-    }
-    console.log(`Final Score: You ${humanScore} - Computer ${computerScore}`);
-}
-let humanScore = 0;
-let computerScore = 0;
-playGame();
+    })
+})
